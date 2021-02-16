@@ -7,10 +7,16 @@ import { Link } from "react-router-dom";
 import Helmet from "react-helmet";
 import Loader from "Components/Loader";
 
+const BaseContainer = styled.div`
+    height: calc(100vh - 50px);
+    width: 100%;
+    position: relative;
+    padding: 20px 50px;
+`;
+
 const Container = styled.div`
   display: flex;
   width: 100%;
-  padding: 5px 50px;
 `;
 
 const SeasonContainer = styled.div`
@@ -62,7 +68,8 @@ const Overview = styled.div`
 
 const BackButton = styled.div`
     text-align: left;
-    margin: 20px 25px;
+    margin-bottom: 20px;
+    margin-left: 5px;
     font-size: 15px;
     cursor: pointer;
     &:hover {
@@ -73,6 +80,23 @@ const BackButton = styled.div`
 
 const BackTitle = styled.span`
   margin-left: 10px;
+`;
+
+const Backdrop = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(${props => props.bgUrl});
+    background-size: cover;
+    background-position: center center;
+    filter: blur(3px);
+    opacity: 0.5;
+    z-index:0;
+`;
+
+const SLink = styled(Link)`
 `;
 
 const Season = ({match: {params: {id}}}) => {
@@ -105,39 +129,46 @@ const Season = ({match: {params: {id}}}) => {
             <title>
                 {`${originalName} | Nomflix`} 
             </title>
-        </Helmet>        
-        <Link to={`/show/${id}`}>
-            <BackButton>
-                <FontAwesomeIcon icon={faChevronCircleLeft} />
-                <BackTitle>Return to TV Show</BackTitle>
-            </BackButton>
-        </Link>
-        {seasons &&
-        seasons.map((s) => (
-            <Container key={s.id}>
-                <PosterContainer>
-                    <Poster bgUrl={s.poster_path
-                                    ? `https://image.tmdb.org/t/p/original/${s.poster_path}`
-                                    : "noPosterSmall.png"
-                    }
-                    ></Poster>
-                </PosterContainer>
-                <SeasonContainer>
-                    <ItemContainer>
-                    <Title>{s.name}</Title>
-                    </ItemContainer>
-                    <ItemContainer>
-                    <ItemKey>Air Date</ItemKey>
-                    <ItemVal>{s.air_date}</ItemVal>
-                    </ItemContainer>
-                    <ItemContainer>
-                    <ItemKey>Total Episodes</ItemKey>
-                    <ItemVal>{s.episode_count}</ItemVal>
-                    </ItemContainer>
-                    <Overview>{s.overview}</Overview>
-                </SeasonContainer>
-            </Container>
-        ))}
+        </Helmet>
+        <Backdrop bgUrl={
+                backdrop ? 
+                `https://image.tmdb.org/t/p/original/${backdrop}`
+                : "noPosterSmall.png"}>
+        </Backdrop>
+        <BaseContainer>
+            <SLink to={`/show/${id}`}>
+                <BackButton>
+                    <FontAwesomeIcon icon={faChevronCircleLeft} />
+                    <BackTitle>Return to TV Show</BackTitle>
+                </BackButton>
+            </SLink>
+            {seasons &&
+            seasons.map((s) => (
+                <Container key={s.id}>
+                    <PosterContainer>
+                        <Poster bgUrl={s.poster_path
+                                        ? `https://image.tmdb.org/t/p/original/${s.poster_path}`
+                                        : "noPosterSmall.png"
+                        }
+                        ></Poster>
+                    </PosterContainer>
+                    <SeasonContainer>
+                        <ItemContainer>
+                        <Title>{s.name}</Title>
+                        </ItemContainer>
+                        <ItemContainer>
+                        <ItemKey>Air Date</ItemKey>
+                        <ItemVal>{s.air_date}</ItemVal>
+                        </ItemContainer>
+                        <ItemContainer>
+                        <ItemKey>Total Episodes</ItemKey>
+                        <ItemVal>{s.episode_count}</ItemVal>
+                        </ItemContainer>
+                        <Overview>{s.overview}</Overview>
+                    </SeasonContainer>
+                </Container>
+            ))}
+        </BaseContainer>
     </>
     );
 };
