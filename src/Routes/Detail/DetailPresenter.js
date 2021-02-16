@@ -178,11 +178,15 @@ const DetailPresenter = ({ isMovie, result, loading, error }) => (
                         <Item>
                             {result.genres.map((g, idx) => idx === result.genres.length - 1 ? g.name : `${g.name} / `)}
                         </Item>
-                        <Divider>•</Divider>
-                        <SLink href={`https://www.imdb.com/title/${result.imdb_id}`}>
-                            <SeasonLinkText>IMDb</SeasonLinkText>
-                            <FontAwesomeIcon icon={faExternalLinkAlt} />
-                        </SLink>
+                        {isMovie ? (
+                            <>
+                                <Divider>•</Divider>
+                                <SLink href={`https://www.imdb.com/title/${result.imdb_id}`}>
+                                    <SeasonLinkText>IMDb</SeasonLinkText>
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} />
+                                </SLink>
+                            </>) : null
+                        }
                     </ItemContainer>
                     <Overview>{result.overview}</Overview>
                     {isMovie ? null : 
