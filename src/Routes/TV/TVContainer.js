@@ -29,7 +29,6 @@ export default class extends React.Component {
                 popular,
                 airingToday
             });
-            console.log(topRated);
         } catch {
             this.setState({
                 error: "Can't find moive information."

@@ -5,6 +5,8 @@ import Loader from "Components/Loader";
 import Helmet from "react-helmet";
 import DetailVideo from "Routes/DetailVideo";
 import { Link } from "react-router-dom";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Container = styled.div`
     height: calc(100vh - 50px);
@@ -76,9 +78,9 @@ const Overview = styled.div`
 `;
 
 const SLink = styled.a`
-    background-color: black;
-    padding: 2px 5px;
-    border-radius: 5px;
+    text-decoration: underline;
+    color: #ffcd03;
+    display: flex;
 `;
 
 const TabContainer = styled.div`
@@ -125,7 +127,14 @@ const CountryText = styled.div`
 `;
 
 const SeasonLink = styled(Link)`
-    
+    display: flex;
+    font-size: 13px;
+    color: #ffcd03;
+    text-decoration: underline;
+`;
+
+const SeasonLinkText = styled.div`
+    margin-right: 5px;
 `;
 
 const DetailPresenter = ({ isMovie, result, loading, error }) => (
@@ -171,11 +180,16 @@ const DetailPresenter = ({ isMovie, result, loading, error }) => (
                         </Item>
                         <Divider>•</Divider>
                         <SLink href={`https://www.imdb.com/title/${result.imdb_id}`}>
-                            IMDb
+                            <SeasonLinkText>IMDb</SeasonLinkText>
+                            <FontAwesomeIcon icon={faExternalLinkAlt} />
                         </SLink>
                     </ItemContainer>
                     <Overview>{result.overview}</Overview>
-                    {isMovie ? null : <SeasonLink to={`/season/${result.id}`}>Seasons</SeasonLink>}
+                    {isMovie ? null : 
+                    <SeasonLink to={`/season/${result.id}`}>
+                        <SeasonLinkText>Seasons</SeasonLinkText>
+                        <FontAwesomeIcon icon={faExternalLinkAlt} />
+                    </SeasonLink>}
                     {
                         result.production_companies && result.production_companies.length !== 0 && 
                         (

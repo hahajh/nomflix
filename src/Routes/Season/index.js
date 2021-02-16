@@ -1,2 +1,2 @@
-import Season from "Routes/Season";
+import Season from "./Season";
 export default Season;

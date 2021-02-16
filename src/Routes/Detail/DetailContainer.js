@@ -36,6 +36,7 @@ export default class extends React.Component{
                 ({ data: result } = await tvApi.showDetail(id));
             }            
             this.setState({result});
+            console.log(result);
         }
         catch(e){
             this.setState({ error: "Can't find detail information." });
